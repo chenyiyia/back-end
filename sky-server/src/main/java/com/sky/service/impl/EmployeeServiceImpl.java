@@ -76,7 +76,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee=new Employee();
         //2.将传输对象的全部属性数据复制给持久化对象
         BeanUtils.copyProperties(employeeDTO,employee);
-        //3.设置持久化对象的剩余属性
+
+        /*//3.设置持久化对象的剩余属性
         //3.1设置状态
         employee.setStatus(StatusConstant.ENABLE);
         //3.2设置密码
@@ -89,7 +90,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         // TODO 后期改为当前登录用户的id
         Long currentId=BaseContext.getCurrentId();
         employee.setCreateUser(currentId);
-        employee.setUpdateUser(currentId);
+        employee.setUpdateUser(currentId);*/
 
         employeeMapper.insert(employee);
     }
@@ -144,8 +145,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void update(EmployeeDTO employeeDTO) {
         Employee employee=new Employee();
         BeanUtils.copyProperties(employeeDTO,employee);
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+
+        /*employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());*/
+
         employeeMapper.update(employee);
     }
 }
