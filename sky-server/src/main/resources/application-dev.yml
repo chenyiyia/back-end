@@ -6,3 +6,7 @@ sky:
     database: sky_take_out
     username: root
     password: 123456
+  qiniuyun:
+    access-key: TguhgFlZ0WA-QEXBgA8Wdq0uA2yVn2yNwK0-gV6o
+    secret-key: flzh0C9gdRptRqhG4W0Nc1N749NaxWphzkT-4N72
+    bucket: chenyiyi
