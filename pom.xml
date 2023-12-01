@@ -132,12 +132,6 @@
                 <artifactId>qiniu-java-sdk</artifactId>
                 <version>[7.4.0, 7.4.99]</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>com.squareup.okhttp3</groupId>-->
-<!--                <artifactId>okhttp</artifactId>-->
-<!--                <version>3.14.2</version>-->
-<!--                <scope>compile</scope>-->
-<!--            </dependency>-->
             <dependency>
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
@@ -149,6 +143,12 @@
                 <artifactId>happy-dns-java</artifactId>
                 <version>0.1.6</version>
                 <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>4.5.13</version>
             </dependency>
 
         </dependencies>

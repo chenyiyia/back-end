@@ -15,6 +15,7 @@ import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
+import com.sky.result.Result;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
 import io.swagger.models.auth.In;
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -95,5 +97,64 @@ public class DishServiceImpl implements DishService {
         dishMapper.deleteBatch(ids);
         //4.删除菜品关联的口味
         dishFlavorMapper.deleteBatch(ids);
+    }
+
+    /**
+     * 根据id获得VO对象
+     * @param id
+     * @return
+     */
+    public Result<DishVO> getByIdWithFlavor(Long id) {
+        //1.执行查询 两个查询
+        Dish dish=dishMapper.getById(id);//1.1查询菜品
+        List<DishFlavor> dishFlavors=dishFlavorMapper.getByDishId(id);//1.2查询口味
+        //2.回显对象
+        DishVO dishVO=new DishVO();
+        BeanUtils.copyProperties(dish,dishVO);
+        dishVO.setFlavors(dishFlavors);
+        return Result.success(dishVO);
+    }
+
+    @Override
+    public void updateWithFlavor(DishDTO dishDTO) {
+        //1.获取传输对象
+        //2.执行修改 两个修改a
+        Dish dish=new Dish();
+        BeanUtils.copyProperties(dishDTO,dish);
+        dishMapper.update(dish);//2.1修改菜品
+
+        dishFlavorMapper.deleteById(dishDTO.getId());//2.2修改多个口味 修改之前要先批量删除旧的
+        List<DishFlavor> dishFlavors = dishDTO.getFlavors();
+        if(dishFlavors != null){
+            dishFlavors.forEach(disFlavor -> {
+                disFlavor.setDishId(dishDTO.getId());
+            });
+            dishFlavorMapper.insertBatch(dishFlavors);
+        }
+        //3.修改不回显
+    }
+
+    /**
+     * 条件查询菜品和口味
+     * @param dish
+     * @return
+     */
+    public List<DishVO> listWithFlavor(Dish dish) {
+        List<Dish> dishList = dishMapper.list(dish);
+
+        List<DishVO> dishVOList = new ArrayList<>();
+
+        for (Dish d : dishList) {
+            DishVO dishVO = new DishVO();
+            BeanUtils.copyProperties(d,dishVO);
+
+            //根据菜品id查询对应的口味
+            List<DishFlavor> flavors = dishFlavorMapper.getByDishId(d.getId());
+
+            dishVO.setFlavors(flavors);
+            dishVOList.add(dishVO);
+        }
+
+        return dishVOList;
     }
 }

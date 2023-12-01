@@ -10,3 +10,8 @@ sky:
     access-key: TguhgFlZ0WA-QEXBgA8Wdq0uA2yVn2yNwK0-gV6o
     secret-key: flzh0C9gdRptRqhG4W0Nc1N749NaxWphzkT-4N72
     bucket: chenyiyi
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    database: 0
