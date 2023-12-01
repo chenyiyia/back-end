@@ -9,7 +9,6 @@
     </insert>
 
     <update id="update">
-#         update dish set name=?,category_id=?
         update dish
         <set>
             <if test="name != null">

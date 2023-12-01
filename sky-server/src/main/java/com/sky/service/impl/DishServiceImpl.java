@@ -125,7 +125,7 @@ public class DishServiceImpl implements DishService {
 
         dishFlavorMapper.deleteById(dishDTO.getId());//2.2修改多个口味 修改之前要先批量删除旧的
         List<DishFlavor> dishFlavors = dishDTO.getFlavors();
-        if(dishFlavors != null){
+        if(dishFlavors != null && dishFlavors.size() > 0){
             dishFlavors.forEach(disFlavor -> {
                 disFlavor.setDishId(dishDTO.getId());
             });
@@ -156,5 +156,16 @@ public class DishServiceImpl implements DishService {
         }
 
         return dishVOList;
+    }
+
+    /**
+     * 修改起售停售
+     * @param dish
+     */
+    public void startOrStop(Dish dish) {
+        //1.获取传输对象
+        //2.执行修改
+        dishMapper.startOrStop(dish);
+        //3.回显对象
     }
 }
