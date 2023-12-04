@@ -79,4 +79,6 @@ public interface DishMapper {
      */
     @Update("update dish set status = #{status} where id = #{id}")
     void startOrStop(Dish dish);
+
+    List<Dish> getBySetmealId(Long id);
 }
