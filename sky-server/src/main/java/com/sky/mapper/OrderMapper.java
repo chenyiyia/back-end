@@ -6,8 +6,11 @@ import com.sky.entity.Orders;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OrderMapper {
@@ -41,4 +44,15 @@ public interface OrderMapper {
     Page<Orders> conditionQuery(OrdersPageQueryDTO ordersPageQueryDTO);
 
     Integer countStatus(Integer status);
+
+    @Select("select sum(amount) from orders where date(order_time) = #{localDate}")
+    BigDecimal getSumAmoutByOrderTime(LocalDate localDate);
+
+    @Select("select sum(user_id) from orders where date(order_time) = #{localDate}")
+    Long getSumUserByOrderTime(LocalDate localDate);
+
+    Integer countByMap(Map map);
+
+    @Select("select sum(amount) from orders where status = #{status}")
+    Double sumByMap(Map map);
 }

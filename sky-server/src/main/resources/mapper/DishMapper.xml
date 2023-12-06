@@ -69,4 +69,17 @@
     <select id="getBySetmealId" resultType="com.sky.entity.Dish">
         select t1.* from dish t1 inner join setmeal_dish t2 on t1.id = t2.dish_id where t2.setmeal_id = #{setmeal.id}
     </select>
+
+    <select id="countByMap" resultType="java.lang.Integer">
+        select count(id) from dish
+        <where>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+        </where>
+    </select>
+
 </mapper>
