@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 
 @RestController
@@ -57,4 +58,15 @@ public class ReportController {
         return Result.success(userReportVO);
     }
 
+    /**
+     * 导出数据
+     */
+    @GetMapping("/export")
+    @ApiOperation("导出数据")
+    void export(HttpServletResponse response){//通过输出流将文件发送到浏览器
+        //1.获取传输对象
+        //2.执行导出
+        reportService.exportBusinessData(response);
+        //3.回显对象
+    }
 }
